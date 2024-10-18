@@ -1,0 +1,69 @@
+/* Ensure cookie button has correct size and no hover effect changes color */
+.cookie-button img {
+    width: 300px; /* Control cookie image size */
+    height: auto;
+    transition: transform 0.2s ease;
+  }
+  
+  .cookie-button:hover img {
+    transform: scale(1.2); /* Slightly enlarge on hover */
+  }
+  
+  .cookie-button:active img {
+    transform: scale(1.1); /* Shrink on click */
+  }
+
+/* Style for cookie button */
+.cookie-button {
+    background: none;  /* Remove the background */
+    border: none;      /* Remove the border */
+    cursor: pointer;   /* Ensure it behaves like a button */
+    padding: 0;         /* Remove extra padding */
+    }
+      
+
+ /* Prevent any background color or other hover styles for the cookie button */
+ .cookie-button:hover {
+    background: none;   /* Ensure no background color change */
+    border: none;       /* Ensure no border on hover */
+    color: inherit;     /* Prevent color change */
+  }
+
+
+  /* Autoclicker button styling */
+.autoclicker-button {
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: transform 0.2s ease; /* Smooth transition for transform */
+  }
+  
+  .autoclicker-button:hover {
+    background-color: #e68900;
+  }
+  
+  .autoclicker-button:active {
+    transform: scale(0.95); /* Slightly shrink the button when clicked */
+  }
+
+  .purchase-button {
+    background: none; /* Transparent background */
+    border: none; /* Remove default button border */
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    color: white;
+  }
+
+/* Ensure the cookie icon is appropriately sized */
+.purchase-button .cookie-icon {
+  width: 16px; /* Adjust the size of the cookie image */
+  height: 16px;
+  margin-left: 5px; /* Optional: space between the number and the cookie */
+}

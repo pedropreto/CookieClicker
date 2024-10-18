@@ -1,38 +1,106 @@
-.App {
-  text-align: center;
+
+
+/* Reset body margins and paddings */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%; /* Ensure body and html take full height */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow-y: hidden;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+/* Main App container */
+.app-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
   min-height: 100vh;
+  background-color: #282c34;
+  text-align: center;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Ensures padding or border doesn't create gaps */
+}
+
+/* Header bar styling */
+.header-bar {
+  background-color: #272424;
+  color: #ffffff;
+  font-size: 0.5rem;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  text-align: center;
+  z-index: 1000;
+  height: 50px;
+}
+
+/* Ensure the cookie icon is appropriately sized */
+.header-bar .cookie-icon {
+  width: 25px; /* Adjust the size of the cookie image */
+  height: 25px;
+  margin-left: 5px; /* Optional: space between the number and the cookie */
+}
+
+/* Space for the content to avoid overlap with the fixed header */
+.content-wrapper {
+  display: flex;
+  justify-content: flex-start; /* Align items horizontally */
+  align-items: flex-start;
+  margin-top: 50px; /* Add space to avoid overlap with header */
+  width: 100%;
+  overflow-y: hidden;
+  padding: 0;
+}
+
+/* Left section (Cookie Button & Info) */
+.left-section {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+  background-image: url('./images/bg_left.jpg'); 
+  background-size: cover;  /* Ensure the image covers the whole section */
+  background-position: center;  /* Center the image */
+  background-repeat: no-repeat;  /* Prevent the image from repeating */
+  width: 40%; /* Left side takes 40% of screen */
+  height: 100vh;
+  margin: 0; /* Make sure there is no margin */
+  padding: 0; /* Make sure there is no padding */
+  box-sizing: border-box; /* Ensure padding doesn't cause overflow */
+}
+
+/* Right section (Upgrades) */
+.right-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  width: 50%; /* Right side takes 50% of screen */
+  padding: 20px;
+  overflow: hidden;
+}
+
+.divider {
+  width: 10px;              /* Thin divider */
+  height: 100vh;           /* Full height of the container */
+  background-color: #272424; /* White color for the divider */
+  margin: 0;
+  padding: 0;
+}
+
+/* Footer styling */
+.footer {
+  width: 100%;
+  background-color: #1c1d1f;
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  text-align: center;
+  padding: 15px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
 }

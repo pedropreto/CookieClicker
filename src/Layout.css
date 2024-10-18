@@ -1,0 +1,160 @@
+/* Global text color settings for better contrast on dark background */
+body, h1, h2, p {
+    color: #ffffff; /* Set all text to white for better readability */
+  }
+  
+  /* Headings */
+  h1 {
+    color: #61dafb; /* Light blue color for headings */
+  }
+  
+  h2 {
+    color: #61dafb;
+  }
+  
+  /* Paragraphs */
+  p {
+    color: #d3d3d3; /* Light gray for regular text */
+  }
+
+.header-bar h1 {
+    color: #ffffff; /* Light blue color for headings */
+  }
+
+/* Style for the text */
+.cookie-count {
+    font-size: 3rem; /* You can adjust the size as needed */
+    font-weight: bold;
+    color: #ffdf00; /* A nice golden color for the cookie count */
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    display: inline-block;
+    z-index: 2; /* Ensure it's in front of the strip */
+  }
+
+  /* Style for the number section (left side of the button) */
+.upgrade-number {
+    font-size: 2rem; /* Large font size for the number */
+    font-weight: bold; /* Bold number */
+    color: #888; /* Darker color for the number */
+    margin-right: 10px; /* Space between the number and name */
+    display: inline-block; /* Make the number appear as a block */
+    min-width: 50px; /* Ensure the number section has enough width */
+    text-align: center; /* Center the number inside the section */
+  }
+
+
+/* Style for the upgrade button */
+.upgrade-item {
+    display: flex;
+    justify-content: space-between; /* Space between the name, number, and cost */
+    align-items: center; /* Vertically center all content */
+    width: 100%; /* Full width button */
+    padding: 10px; /* Padding inside the button */
+    margin: 0; /* Remove margin */
+    border: 2px solid #ccc; /* Border around the button */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #535a69; /* Dark background */
+    color: white; /* White text */
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2); /* Inner shadow effect */
+    transition: background-color 0.3s, transform 0.1s; /* Smooth transition on hover */
+    cursor: pointer; /* Pointer cursor on hover */
+    overflow: hidden; /* Prevent overflow */
+    height: auto; /* Allow the button to expand if content overflows */
+  }
+
+  .upgrade-item + .upgrade-item {
+    margin-top: 0px; /* Remove space between buttons */
+  }
+
+  .upgrade-item:hover {
+    background-color: #333; /* Darker background on hover */
+  }
+
+  .upgrade-item:disabled {
+    opacity: 0.5; /* Faded button when disabled */
+    cursor: not-allowed; /* Change cursor to indicate unclickable */
+  }
+  
+  .upgrade-item:active {
+    background-color: #444; /* Keep same background on click */
+  }
+  
+  
+  .upgrade-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff; /* White color for upgrade name */
+    flex-grow: 1; /* Allow the name to grow and take available space */
+    margin:0;
+  }
+  
+/* Style for the cost section (right side of the button) */
+.upgrade-cost {
+    font-size: 1.2rem; /* Font size for the cost */
+    display: flex;
+    align-items: center; /* Vertically align the cost and cookie icon */
+    justify-content: flex-end; /* Align cost to the right */
+    width: 120px; /* Fixed width for the cost section */
+  }
+
+  .upgrade-cost img {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px; /* Space between the number and the cookie image */
+  }
+
+  .upgrade-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column; /* Stack name and description vertically */
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+
+  /* Style for the Total CPS text */
+.total-cps {
+    font-size: 1rem; /* Smaller font size for CPS */
+    color: #d3d3d3; /* Lighter color for CPS */
+    font-weight: normal; /* Regular weight */
+    vertical-align: top; /* Align the CPS text to the top */
+    margin: 5px 0; /* Space between cookie count and CPS */
+  }
+
+
+/* Semi-transparent strip below the cookie count */
+.cookie-strip {
+    width: 100%; /* Full width of the container */
+    height: 5px; /* Height of the strip */
+    background-color: rgba(255, 255, 255, 0.2); /* White with 20% opacity */
+    position: absolute; /* Position it absolutely within the parent */
+    bottom: 0; /* Align it to the bottom */
+    left: 0; /* Stretch across the full width */
+    z-index: 1; /* Ensure it is behind other content */
+  }
+
+  /* Style for the description of each upgrade */
+.upgrade-description {
+    font-size: 0.7rem; /* Smaller text size */
+    color: #ccc; /* Lighter color for the description */
+    margin-top: 5px; /* Space between the name and the description */
+    text-align: left; /* Align the description text to the left */
+    white-space: normal; /* Allow text to wrap */
+  }
+
+/* Tooltip styling */
+.tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7); /* Dark background */
+    color: #fff; /* White text */
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    z-index: 100; /* Ensure it's on top */
+    pointer-events: none; /* Ensure it doesn't interfere with clicking */
+    white-space: nowrap;
+    transform: translateX(-220%); /* Shift it to the left of the button */
+    opacity: 0.9;
+  }
