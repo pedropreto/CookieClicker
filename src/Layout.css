@@ -15,6 +15,9 @@ body, h1, h2, p {
   /* Paragraphs */
   p {
     color: #d3d3d3; /* Light gray for regular text */
+    font-weight: bold;
+    font-size: 1.1rem;
+    z-index: 1;
   }
 
 .header-bar h1 {
@@ -75,8 +78,8 @@ body, html {
     align-items: flex-start;
     margin-top: 50px; /* Add space to avoid overlap with header */
     width: 100%;
-    overflow-y: hidden;
     padding: 0;
+    overflow: visible;
   }
   
   /* Left section (Cookie Button & Info) */
@@ -94,6 +97,7 @@ body, html {
     margin: 0; /* Make sure there is no margin */
     padding: 0; /* Make sure there is no padding */
     box-sizing: border-box; /* Ensure padding doesn't cause overflow */
+    position: relative;
   }
   
   /* Right section (Upgrades) */
@@ -104,7 +108,10 @@ body, html {
     align-items: flex-start;
     width: 50%; /* Right side takes 50% of screen */
     padding: 20px;
-    overflow: hidden;
+    position: relative;
+    overflow: visible;
+    z-index: 2;
+
   }
   
   .divider {
@@ -113,6 +120,8 @@ body, html {
     background-color: #272424; /* White color for the divider */
     margin: 0;
     padding: 0;
+    z-index: 1;
+    position: relative;
   }
   
   /* Footer styling */
@@ -136,7 +145,24 @@ body, html {
   }
 
   
-
+  .upgrades-section {
+    display: flex;
+    flex-direction: row;  /* Horizontal layout for upgrades */
+    flex-wrap: wrap; /* Allow upgrades to wrap to the next row if they don't fit */
+    position: relative;
+    overflow-y: hidden;
+    overflow-x: auto;
+  }
+  
+  /* Buildings section: Keep buildings in a column layout */
+  .buildings-section {
+    display: flex;
+    flex-direction: column;  /* Stack buildings vertically */
+    margin-top: 20px; /* Space between upgrades and buildings */
+    width: 100%;
+    z-index: 1;
+    position: relative;
+  }
 
 
 
