@@ -8,6 +8,7 @@
     line-height: 1;
     display: inline-block;
     z-index: 2; /* Ensure it's in front of the strip */
+    position: relative;
   }
 
     /* Style for the Total CPS text */
@@ -17,6 +18,7 @@
     font-weight: normal; /* Regular weight */
     vertical-align: top; /* Align the CPS text to the top */
     margin: 5px 0; /* Space between cookie count and CPS */
+    position: relative;
   }
 
   /* Semi-transparent strip below the cookie count */

@@ -19,6 +19,7 @@
     border: none;      /* Remove the border */
     cursor: pointer;   /* Ensure it behaves like a button */
     padding: 0;         /* Remove extra padding */
+    position: relative;
     }
       
 

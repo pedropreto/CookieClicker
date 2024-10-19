@@ -59,7 +59,7 @@
     display: flex;
     justify-content: space-between; /* Space between the name, number, and cost */
     align-items: center; /* Vertically center all content */
-    width: 100%; /* Full width button */
+    max-width: 1000px; /* Full width button */
     padding: 10px; /* Padding inside the button */
     margin: 0; /* Remove margin */
     border: 2px solid #ccc; /* Border around the button */

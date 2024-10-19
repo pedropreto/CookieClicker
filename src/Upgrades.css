@@ -7,7 +7,7 @@
     margin: 0px;
     position: relative; /* This is required for the tooltip to work */
     cursor: pointer;
-    z-index: 100;
+    z-index: 10;
   }
 
   /* Make sure the upgrade items are displayed horizontally */
@@ -15,25 +15,26 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    overflow-x: auto; /* Allow horizontal scrolling if needed */
+    
     padding: 10px 0;
     justify-content: flex-start; /* Align items to the left */
     gap: 10px; /* Space between buttons */
     width: 100%;
     position: relative;
-    overflow-y: hidden;
-    z-index: 1;
+    overflow-x: visible; /* Allow horizontal scrolling if needed */
+    overflow-y: visible;
+    z-index: 10;
 }
 
 
 .upgrade-item {
     width: 60px; /* Box size */
     height: 60px;
-    border: 6px solid #bbbbbb; /* Border around the box */
+    border: 6px solid #cecece; /* Border around the box */
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #fff;
+    background-color: #ffffff;
     box-sizing: border-box;
     border-radius: 0px;
     transition: all 0.2s ease-in-out;
@@ -82,7 +83,7 @@
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #333;
+    background-color: #333; /*#333 */
     color: white;
     padding: 8px;
     border-radius: 5px;

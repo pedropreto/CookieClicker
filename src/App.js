@@ -3,14 +3,17 @@ import './CookieSide.css';
 import './Button.css';
 import './Layout.css';
 import cookieImage from './images/cookie.png';
-import cursorIcon from './images/cursor_icon.png';  // Adjust path to where the image is located
-import grandmaIcon from './images/grandma_icon.png';
-import farmIcon from './images/farm_icon.png';
+
 import { formatNumber } from './utils/helpers'; // Import from utils
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Building from './components/Building';
 import Upgrade from './components/Upgrade';
+
+// Import building and upgrade data from external files
+import { buildings as initialBuildings } from './data/buildingsData';
+import { buildingUpgrades as initialBuildingUpgrades } from './data/upgradesData';
+import { click } from '@testing-library/user-event/dist/click';
 
 
 function App() {
@@ -19,53 +22,10 @@ function App() {
   const [totalCPS, setTotalCPS] = useState(0); // Total CPS (sum of all upgrades)
   const [cookieOverflow, setCookieOverflow] = useState(0); // Accumulates fractional cookies
   const [hoveredUpgrade, setHoveredUpgrade] = useState(null); // Track hovered upgrade index
+  const [buildings, setBuildings] = useState(initialBuildings);  // Building data from file
+  const [buildingUpgrades, setBuildingUpgrades] = useState(initialBuildingUpgrades);  // Upgrade data from file
 
 
-
-  const [buildings, setBuildings] = useState([
-    { name: 'Cursor', baseCost: 15, cps: 50, number: 0, cost: 1.5, description: 'Autoclicks to generate more cookies', cpsMultiplier: 1 },
-    { name: 'Grandma', baseCost: 100, cps: 1, number: 0, cost: 100,description: 'A nice grandma to bake more cookies', cpsMultiplier: 1 },
-    { name: 'Farm', baseCost: 1100, cps: 8, number: 0, cost: 1100, description: 'Grows cookie plants from cookie seeds', cpsMultiplier: 1 },
-    { name: 'Mine', baseCost: 12000, cps: 47, number: 0, cost: 12000, description: 'Mines out cookie dough and chocolate chips.', cpsMultiplier: 1 },
-    { name: 'Factory', baseCost: 130000, cps: 260, number: 0, cost: 130000, description: 'Produces large quantities of cookies.', cpsMultiplier: 1 },
-    { name: 'Bank', baseCost: 1400000, cps: 1400, number: 0, cost: 1400000, description: 'Generates cookies from interest.', cpsMultiplier: 1 },
-  ]);
-
-  const [buildingUpgrades, setBuildingUpgrades] = useState([
-    {
-      name: "Double Cursor",
-      building: "Cursor",  // Affects only the cursor building
-      type: 1,              // Type 1: Single building multiplier
-      multiplier: 2,        // Multiplies cursor CpS by 2
-      baseCost: 1000,
-      icon: cursorIcon,
-      description: "Doubles the CpS of all cursors.",
-      buildingCount:1, // Can be purchased after owning 1 cursor
-      purchasedAt: [],
-    },
-    {
-      name: "Cursor Efficiency",
-      building: "Cursor",  // Affects only the cursor building
-      type: 1,              // Type 1: Single building multiplier
-      multiplier: 2,        // Multiplies cursor CpS by 2
-      baseCost: 5000,
-      icon: cursorIcon,
-      description: "Doubles the CpS of cursors again.",
-      buildingCount: 5, // Can be purchased after owning 5 cursors
-      purchasedAt: [],
-    },
-    {
-      name: "Grandma Boost",
-      building: "Grandma",  // Affects only the grandma building
-      type: 1,               // Type 1: Single building multiplier
-      multiplier: 1.5,       // Boosts grandma CpS by 50%
-      baseCost: 3000,
-      icon: grandmaIcon,
-      description: "Boosts the CpS of all grandmas by 50%.",
-      buildingCount: 3, // Can be purchased after owning 3 grandmas
-      purchasedAt: [],
-    },
-  ]);
 
 
   // when you click manually on the element (cookie)
@@ -199,18 +159,38 @@ function App() {
   }, [buildings]); // Runs whenever buildings change
 
 
+  // Calculate the new click value based on the number of upgrades
+useEffect(() => {
+    let newClickValue = 1;
+    
+    // Loop through the purchased cursor upgrades
+    buildingUpgrades.forEach(upgrade => {
+        if (upgrade.building === "Cursor" && upgrade.purchasedAt.length > 0) {
+            newClickValue *= upgrade.multiplier; // Increase click value based on upgrades
+        }
+    });
+
+    setClickValue(newClickValue); // Update click value
+}, [buildingUpgrades]); // This runs whenever building upgrades change
+
+
   return (
     <div className="app-container">
       <Header />
       <div className="content-wrapper">
         <div className="left-section">
           <p className="cookie-count">{formatNumber(Math.floor(cookies))} Cookies</p>
-          <p className="total-cps">per second: {formatNumber(totalCPS)}</p>
+          <p className="total-cps">per second: {formatNumber(totalCPS)} click value : {clickValue}</p>
           <button onClick={handleClick} className="cookie-button">
             <img src={cookieImage} alt="Cookie" />
           </button>
           
         </div>
+
+
+        {/* Divider */}
+        <div className="divider"></div>
+
         <div className="right-section">
         <p>Upgrades</p>
         <div className="upgrades-section">

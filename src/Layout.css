@@ -88,11 +88,14 @@ body, html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: url('./images/bg_left.jpg'); 
+    background: 
+    linear-gradient(135deg, rgba(58, 58, 58, 0.9), rgba(244, 241, 239, 0.9)), /* Gradient with transparency */
+    url('./images/bg_left.jpg'); 
+    background-blend-mode: soft-light;
     background-size: cover;  /* Ensure the image covers the whole section */
     background-position: center;  /* Center the image */
     background-repeat: no-repeat;  /* Prevent the image from repeating */
-    width: 40%; /* Left side takes 40% of screen */
+    width: 70%; /* Left side takes 40% of screen */
     height: 100vh;
     margin: 0; /* Make sure there is no margin */
     padding: 0; /* Make sure there is no padding */
@@ -106,23 +109,29 @@ body, html {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    width: 50%; /* Right side takes 50% of screen */
+    width: 30%; /* Right side takes 50% of screen */
     padding: 20px;
     position: relative;
     overflow: visible;
-    z-index: 2;
+    z-index: 0;
+    height: 100vh;
+    background: 
+    linear-gradient(135deg, rgba(58, 58, 58, 0.7), rgba(244, 241, 239, 0.7)), /* Gradient with transparency */
+    url('./images/paper_texture.jpg'); ; /* Your texture image */
+    background-size: cover;  /* Ensure the image covers the whole section */
+    background-position: center;  /* Center the image */
+    background-repeat: no-repeat;  /* Prevent the image from repeating */
 
   }
   
-  .divider {
-    width: 10px;              /* Thin divider */
-    height: 100vh;           /* Full height of the container */
-    background-color: #272424; /* White color for the divider */
-    margin: 0;
-    padding: 0;
-    z-index: 1;
-    position: relative;
-  }
+ /* The divider between left and right sections */
+.divider {
+  width: 10px; /* Fixed width for the divider */
+  height: 100%; /* Full screen height */
+  background-image: url('./images/wood_divider.png'); /* Path to your divider image */
+  background-size: cover; /* Ensures the image covers the entire width of the divider */
+  background-position: center; /* Centers the image */
+}
   
   /* Footer styling */
   .footer {
