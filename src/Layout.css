@@ -21,140 +21,124 @@ body, h1, h2, p {
     color: #ffffff; /* Light blue color for headings */
   }
 
-/* Style for the text */
-.cookie-count {
-    font-size: 3rem; /* You can adjust the size as needed */
-    font-weight: bold;
-    color: #ffdf00; /* A nice golden color for the cookie count */
+  
+
+/* Reset body margins and paddings */
+body, html {
     margin: 0;
     padding: 0;
-    line-height: 1;
-    display: inline-block;
-    z-index: 2; /* Ensure it's in front of the strip */
+    height: 100%; /* Ensure body and html take full height */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    overflow-y: hidden;
   }
-
-  /* Style for the number section (left side of the button) */
-.upgrade-number {
-    font-size: 2rem; /* Large font size for the number */
-    font-weight: bold; /* Bold number */
-    color: #888; /* Darker color for the number */
-    margin-right: 10px; /* Space between the number and name */
-    display: inline-block; /* Make the number appear as a block */
-    min-width: 50px; /* Ensure the number section has enough width */
-    text-align: center; /* Center the number inside the section */
-  }
-
-
-/* Style for the upgrade button */
-.upgrade-item {
+  
+  /* Main App container */
+  .app-container {
     display: flex;
-    justify-content: space-between; /* Space between the name, number, and cost */
-    align-items: center; /* Vertically center all content */
-    width: 100%; /* Full width button */
-    padding: 10px; /* Padding inside the button */
-    margin: 0; /* Remove margin */
-    border: 2px solid #ccc; /* Border around the button */
-    border-radius: 5px; /* Rounded corners */
-    background-color: #535a69; /* Dark background */
-    color: white; /* White text */
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2); /* Inner shadow effect */
-    transition: background-color 0.3s, transform 0.1s; /* Smooth transition on hover */
-    cursor: pointer; /* Pointer cursor on hover */
-    overflow: hidden; /* Prevent overflow */
-    height: auto; /* Allow the button to expand if content overflows */
-  }
-
-  .upgrade-item + .upgrade-item {
-    margin-top: 0px; /* Remove space between buttons */
-  }
-
-  .upgrade-item:hover {
-    background-color: #333; /* Darker background on hover */
-  }
-
-  .upgrade-item:disabled {
-    opacity: 0.5; /* Faded button when disabled */
-    cursor: not-allowed; /* Change cursor to indicate unclickable */
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    min-height: 100vh;
+    background-color: #282c34;
+    text-align: center;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Ensures padding or border doesn't create gaps */
   }
   
-  .upgrade-item:active {
-    background-color: #444; /* Keep same background on click */
+  /* Header bar styling */
+  .header-bar {
+    background-color: #272424;
+    color: #ffffff;
+    font-size: 0.5rem;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    text-align: center;
+    z-index: 1000;
+    height: 50px;
   }
   
-  
-  .upgrade-name {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #fff; /* White color for upgrade name */
-    flex-grow: 1; /* Allow the name to grow and take available space */
-    margin:0;
+  /* Ensure the cookie icon is appropriately sized */
+  .header-bar .cookie-icon {
+    width: 25px; /* Adjust the size of the cookie image */
+    height: 25px;
+    margin-left: 5px; /* Optional: space between the number and the cookie */
   }
   
-/* Style for the cost section (right side of the button) */
-.upgrade-cost {
-    font-size: 1.2rem; /* Font size for the cost */
+  /* Space for the content to avoid overlap with the fixed header */
+  .content-wrapper {
     display: flex;
-    align-items: center; /* Vertically align the cost and cookie icon */
-    justify-content: flex-end; /* Align cost to the right */
-    width: 120px; /* Fixed width for the cost section */
+    justify-content: flex-start; /* Align items horizontally */
+    align-items: flex-start;
+    margin-top: 50px; /* Add space to avoid overlap with header */
+    width: 100%;
+    overflow-y: hidden;
+    padding: 0;
   }
-
-  .upgrade-cost img {
-    width: 20px;
-    height: 20px;
-    margin-left: 5px; /* Space between the number and the cookie image */
-  }
-
-  .upgrade-details {
-    flex: 1;
+  
+  /* Left section (Cookie Button & Info) */
+  .left-section {
     display: flex;
-    flex-direction: column; /* Stack name and description vertically */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url('./images/bg_left.jpg'); 
+    background-size: cover;  /* Ensure the image covers the whole section */
+    background-position: center;  /* Center the image */
+    background-repeat: no-repeat;  /* Prevent the image from repeating */
+    width: 40%; /* Left side takes 40% of screen */
+    height: 100vh;
+    margin: 0; /* Make sure there is no margin */
+    padding: 0; /* Make sure there is no padding */
+    box-sizing: border-box; /* Ensure padding doesn't cause overflow */
+  }
+  
+  /* Right section (Upgrades) */
+  .right-section {
+    display: flex;
+    flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-}
+    width: 50%; /* Right side takes 50% of screen */
+    padding: 20px;
+    overflow: hidden;
+  }
+  
+  .divider {
+    width: 10px;              /* Thin divider */
+    height: 100vh;           /* Full height of the container */
+    background-color: #272424; /* White color for the divider */
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Footer styling */
+  .footer {
+    width: 100%;
+    background-color: #1c1d1f;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+  }
+  
 
 
-  /* Style for the Total CPS text */
-.total-cps {
-    font-size: 1rem; /* Smaller font size for CPS */
-    color: #d3d3d3; /* Lighter color for CPS */
-    font-weight: normal; /* Regular weight */
-    vertical-align: top; /* Align the CPS text to the top */
-    margin: 5px 0; /* Space between cookie count and CPS */
+  .cookie-icon {
+    width: 24px;  /* Adjust size as needed */
+    height: 24px;
+    vertical-align: middle;  /* Aligns the icon vertically in line with text */
   }
 
+  
 
-/* Semi-transparent strip below the cookie count */
-.cookie-strip {
-    width: 100%; /* Full width of the container */
-    height: 5px; /* Height of the strip */
-    background-color: rgba(255, 255, 255, 0.2); /* White with 20% opacity */
-    position: absolute; /* Position it absolutely within the parent */
-    bottom: 0; /* Align it to the bottom */
-    left: 0; /* Stretch across the full width */
-    z-index: 1; /* Ensure it is behind other content */
-  }
 
-  /* Style for the description of each upgrade */
-.upgrade-description {
-    font-size: 0.7rem; /* Smaller text size */
-    color: #ccc; /* Lighter color for the description */
-    margin-top: 5px; /* Space between the name and the description */
-    text-align: left; /* Align the description text to the left */
-    white-space: normal; /* Allow text to wrap */
-  }
 
-/* Tooltip styling */
-.tooltip {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.7); /* Dark background */
-    color: #fff; /* White text */
-    padding: 5px;
-    border-radius: 5px;
-    font-size: 0.8rem;
-    z-index: 100; /* Ensure it's on top */
-    pointer-events: none; /* Ensure it doesn't interfere with clicking */
-    white-space: nowrap;
-    transform: translateX(-220%); /* Shift it to the left of the button */
-    opacity: 0.9;
-  }
+
+
+

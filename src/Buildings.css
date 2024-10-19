@@ -1,0 +1,112 @@
+  /* Tooltip styling */
+.building-tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7); /* Dark background */
+    color: #fff; /* White text */
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    z-index: 100; /* Ensure it's on top */
+    pointer-events: none; /* Ensure it doesn't interfere with clicking */
+    white-space: nowrap;
+    transform: translateX(-150%); /* Shift it to the left of the button */
+    opacity: 0.9;
+  }
+  
+  /* Style for the description of each upgrade */
+  .building-description {
+    font-size: 0.7rem; /* Smaller text size */
+    color: #ccc; /* Lighter color for the description */
+    margin-top: 5px; /* Space between the name and the description */
+    text-align: left; /* Align the description text to the left */
+    white-space: normal; /* Allow text to wrap */
+  }
+
+  /* Style for the cost section (right side of the button) */
+.building-cost {
+    font-size: 1.2rem; /* Font size for the cost */
+    display: flex;
+    align-items: center; /* Vertically align the cost and cookie icon */
+    justify-content: flex-end; /* Align cost to the right */
+    width: 120px; /* Fixed width for the cost section */
+  }
+
+  .building-cost img {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px; /* Space between the number and the cookie image */
+  }
+
+  .building-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column; /* Stack name and description vertically */
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.building-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff; /* White color for upgrade name */
+    flex-grow: 1; /* Allow the name to grow and take available space */
+    margin:0;
+  }
+
+
+  /* Style for the upgrade button */
+.building-item {
+    display: flex;
+    justify-content: space-between; /* Space between the name, number, and cost */
+    align-items: center; /* Vertically center all content */
+    width: 100%; /* Full width button */
+    padding: 10px; /* Padding inside the button */
+    margin: 0; /* Remove margin */
+    border: 2px solid #ccc; /* Border around the button */
+    border-radius: 5px; /* Rounded corners */
+    background-image: linear-gradient(135deg, #4460db, #979fe9); /* Gradient from dark to light */
+    color: white; /* White text */
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2); /* Inner shadow effect */
+    transition: background-color 0.3s, transform 0.1s; /* Smooth transition on hover */
+    cursor: pointer; /* Pointer cursor on hover */
+    overflow: hidden; /* Prevent overflow */
+    height: auto; /* Allow the button to expand if content overflows */
+  }
+  
+  /* Style for the number section (left side of the button) */
+.building-number {
+    font-size: 2rem; /* Large font size for the number */
+    font-weight: bold; /* Bold number */
+    color: #888; /* Darker color for the number */
+    margin-right: 10px; /* Space between the number and name */
+    display: inline-block; /* Make the number appear as a block */
+    min-width: 50px; /* Ensure the number section has enough width */
+    text-align: center; /* Center the number inside the section */
+  }
+
+
+  
+
+  .building-item + .building-item {
+    margin-top: 0px; /* Remove space between buttons */
+  }
+
+/* Hover effect (only if the button is not too expensive) */
+.building-item:hover:not(.too-expensive) {
+    background: linear-gradient(135deg, #444b58, #6c778c);
+}
+  
+  .building-item:active {
+    background-color: #444; /* Keep same background on click */
+  }
+  
+  /* When the button is too expensive (low cookie count) */
+.building-item.too-expensive {
+    background: linear-gradient(135deg, #333, #444); /* Darker gradient */
+    cursor: not-allowed; /* Indicate the button is non-functional */
+}
+
+/* Hover effect for too expensive buttons (keep the look darker but allow hover) */
+.building-item.too-expensive:hover {
+    background: linear-gradient(135deg, #333, #444);
+}

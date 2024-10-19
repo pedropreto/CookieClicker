@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
+import './CookieSide.css';
 import './Button.css';
 import './Layout.css';
 import cookieImage from './images/cookie.png';
+import { formatNumber } from './utils/helpers'; // Import from utils
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Building from './components/Building';
+import Upgrade from './components/Upgrade';
 
-function Footer() {
-  return <div className='footer'>© 2024 Preto's Games</div>;
-}
-
-function Header() {
-  return (
-    <div className='header-bar'>
-      <h1>Cookie Clicker <img src={cookieImage} alt="Cookie" className="cookie-icon" /></h1>
-    </div>
-  );
-}
 
 function App() {
   const [cookies, setCookies] = useState(0);
@@ -23,67 +17,84 @@ function App() {
   const [cookieOverflow, setCookieOverflow] = useState(0); // Accumulates fractional cookies
   const [hoveredUpgrade, setHoveredUpgrade] = useState(null); // Track hovered upgrade index
 
-  const scales = [
-    { value: 1e6, label: 'million' }, // Million
-    { value: 1e9, label: 'billion' }, // Billion
-    { value: 1e12, label: 'trillion' }, // Trillion
-    { value: 1e15, label: 'quadrillion' }, // Quadrillion
-    { value: 1e18, label: 'quintillion' }, // Quintillion
-  ];
 
-  const formatNumber = (num) => {
-    if (num < 1000) {
-      return num.toLocaleString(); // No scaling needed for numbers less than 1000
-    }
 
-    for (let i = scales.length - 1; i >= 0; i--) {
-      if (num >= scales[i].value) {
-        const formattedNum = (num / scales[i].value).toFixed(3); // Format to 3 decimals
-        return `${formattedNum} ${scales[i].label}`;
-      }
-    }
-
-    return num.toLocaleString(); // If number is too large, return as is
-  };
-
-  const [upgrades, setUpgrades] = useState([
-    { name: 'Cursor', baseCost: 15, cps: 0.1, number: 0, cost: 15, description: 'Autoclicks to generate more cookies' },
-    { name: 'Grandma', baseCost: 100, cps: 1, number: 0, cost: 100,description: 'A nice grandma to bake more cookies' },
-    { name: 'Farm', baseCost: 1100, cps: 8, number: 0, cost: 1100, description: 'Grows cookie plants from cookie seeds' },
-    { name: 'Mine', baseCost: 12000, cps: 47, number: 0, cost: 12000, description: 'Mines out cookie dough and chocolate chips.' },
-    { name: 'Factory', baseCost: 130000, cps: 260, number: 0, cost: 130000, description: 'Produces large quantities of cookies.' },
-    { name: 'Bank', baseCost: 1400000, cps: 1400, number: 0, cost: 1400000, description: 'Generates cookies from interest.' },
+  const [buildings, setBuildings] = useState([
+    { name: 'Cursor', baseCost: 15, cps: 0.1, number: 0, cost: 15, description: 'Autoclicks to generate more cookies', cpsMultiplier: 1 },
+    { name: 'Grandma', baseCost: 100, cps: 1, number: 0, cost: 100,description: 'A nice grandma to bake more cookies', cpsMultiplier: 1 },
+    { name: 'Farm', baseCost: 1100, cps: 8, number: 0, cost: 1100, description: 'Grows cookie plants from cookie seeds', cpsMultiplier: 1 },
+    { name: 'Mine', baseCost: 12000, cps: 47, number: 0, cost: 12000, description: 'Mines out cookie dough and chocolate chips.', cpsMultiplier: 1 },
+    { name: 'Factory', baseCost: 130000, cps: 260, number: 0, cost: 130000, description: 'Produces large quantities of cookies.', cpsMultiplier: 1 },
+    { name: 'Bank', baseCost: 1400000, cps: 1400, number: 0, cost: 1400000, description: 'Generates cookies from interest.', cpsMultiplier: 1 },
   ]);
 
+  const [buildingUpgrades, setBuildingUpgrades] = useState([
+    { name: 'Cursor', building: 'Cursor', thresholds: [1, 5, 15, 25, 50, 100], unlockedAt: null, purchasedAt: [], baseCost: 100, cpsMultiplier: 2 },
+    { name: 'Grandma', building: 'Grandma', thresholds: [1, 5, 15, 25, 50, 100], unlockedAt: null, purchasedAt: [], baseCost: 500, cpsMultiplier: 2 },
+    { name: 'Farm', building: 'Farm', thresholds: [1, 5, 15, 25, 50, 100], unlockedAt: null, purchasedAt: [], baseCost: 5000, cpsMultiplier: 2 },
+    // Add other building upgrades similarly...
+  ]);
+
+  // when you click manually on the element (cookie)
   const handleClick = () => {
     setCookies(prev => prev + clickValue);
   };
 
-  const purchaseUpgrade = (index) => {
-    const newUpgrades = [...upgrades];
-    const upgrade = newUpgrades[index];
 
-    if (cookies >= upgrade.cost) {
-      const currentCost = upgrade.cost;
+  const purchaseBuilding = (index) => {
+    const newBuildings = [...buildings];
+    const building = newBuildings[index];
+
+
+    if (cookies >= building.cost) {
+      const currentCost = building.cost;
       setCookies(prev => prev - currentCost);
-      upgrade.number += 1;
+      building.number += 1;
 
       const alpha = 1.15;
-      upgrade.cost = Math.round(upgrade.baseCost * Math.pow(alpha, upgrade.number));
+      building.cost = Math.round(building.baseCost * Math.pow(alpha, building.number));
 
-      setUpgrades(newUpgrades);
+      setBuildings(newBuildings);
 
-      const newTotalCPS = newUpgrades.reduce((total, item) => total + (item.cps * item.number), 0);
+      const newTotalCPS = newBuildings.reduce((total, item) => total + (item.cps * item.number), 0);
       setTotalCPS(newTotalCPS);
     }
   };
 
+
+  const purchaseBuildingUpgrade = (index) => {
+    const newUpgrades = [...buildingUpgrades];
+    const upgrade = newUpgrades[index];
+    const upgradeCost = upgrade.baseCost * Math.pow(2, upgrade.purchasedAt.length);
+  
+    if (cookies >= upgradeCost) {
+      // Deduct the cost from cookies
+      setCookies(prev => prev - upgradeCost);
+  
+      // Mark this upgrade as purchased
+      upgrade.purchasedAt.push(upgradeCost);
+  
+      // Apply the upgrade multiplier (optional, depending on game logic)
+      const newBuildings = [...buildings];
+      const building = newBuildings.find(b => b.name === upgrade.building);
+      building.cps *= upgrade.cpsMultiplier; // Update CPS of the related building
+  
+      setBuildings(newBuildings);
+      setBuildingUpgrades(newUpgrades);
+  
+      // Recalculate total CPS after applying the upgrade
+      const newTotalCPS = newBuildings.reduce((total, item) => total + (item.cps * item.number), 0);
+      setTotalCPS(newTotalCPS);
+    }
+  };
+
+  // Auto-clicking cookies per second
   useEffect(() => {
     let interval;
 
     if (totalCPS > 0) {
       const intervalTime = 20;
-      const cookiesPerInterval = totalCPS / 50;
+      const cookiesPerInterval = totalCPS / (1000/intervalTime); // 50 times per second
 
       interval = setInterval(() => {
         setCookieOverflow(prevOverflow => {
@@ -101,66 +112,62 @@ function App() {
     return () => clearInterval(interval);
   }, [totalCPS]);
 
+  // Update building upgrades when a building is purchased
+  useEffect(() => {
+    const updatedUpgrades = buildingUpgrades.map((upgrade) => {
+      const building = buildings.find(b => b.name === upgrade.building);
 
-  // PAGE
+
+      // Find the next threshold to unlock
+      const nextThreshold = upgrade.thresholds.find(threshold => building.number >= threshold && !upgrade.purchasedAt.includes(threshold));
+
+      if (nextThreshold && upgrade.unlockedAt !== nextThreshold) {
+        return { ...upgrade, unlockedAt: nextThreshold }; // Unlock upgrade
+      }
+      return upgrade;
+    });
+
+    setBuildingUpgrades(updatedUpgrades);
+  }, [buildings]); // Effect runs whenever buildings state is updated
+
+
   return (
     <div className="app-container">
-      {/* Header Bar */}
       <Header />
-
       <div className="content-wrapper">
         <div className="left-section">
-          <p className="cookie-count">{formatNumber(Math.floor(cookies))} Cookies
-          </p>
-
-          <div className="cookie-strip"></div>
-
-          <p className='total-cps'>
-            por segundo: {formatNumber(totalCPS)}
-            </p>
-            
-          {/* Manual Click Button */}
+          <p className="cookie-count">{formatNumber(Math.floor(cookies))} Cookies</p>
           <button onClick={handleClick} className="cookie-button">
             <img src={cookieImage} alt="Cookie" />
           </button>
+          <p className="total-cps">per second: {formatNumber(totalCPS)}</p>
         </div>
-
-        <div className="divider"></div>  {/* Divider element */}
-
-        {/* Right Section Upgrade Buttons */}
-<div className="right-section">
-  <h3>Buildings</h3>
-  {upgrades.map((upgrade, index) => (
-    <button
-      key={index}
-      onClick={() => purchaseUpgrade(index)}
-      onMouseEnter={() => setHoveredUpgrade(index)} // Set hovered index
-      onMouseLeave={() => setHoveredUpgrade(null)} // Remove hovered index
-      disabled={cookies < upgrade.cost}
-      className="upgrade-item"
-    >
-        <div className="upgrade-number">
-        {formatNumber(upgrade.number)} {/* Display the upgrade number */}
+        <div className="right-section">
+        {buildingUpgrades.map((upgrade, index) => (
+          <Upgrade
+            upgrade={upgrade}
+            cookies={cookies}
+            purchaseBuildingUpgrade={purchaseBuildingUpgrade}
+            setCookies={setCookies}
+            buildings={buildings}
+            setBuildings={setBuildings}
+            setTotalCPS={setTotalCPS}
+            formatNumber={formatNumber}
+          />
+        ))}
+          {buildings.map((building, index) => (
+          <Building
+            building={building}
+            cookies={cookies}
+            purchaseBuilding={purchaseBuilding}
+            hoveredUpgrade={hoveredUpgrade}
+            setHoveredUpgrade={setHoveredUpgrade}
+            totalCPS={totalCPS}
+            formatNumber={formatNumber}
+          />
+        ))}
+        </div>
       </div>
-      <div className="upgrade-details">
-        <p className="upgrade-name">{upgrade.name}</p>
-        <p className="upgrade-description">{upgrade.description}</p> {/* Display the description */}
-
-         {/* Tooltip showing CPS when hovered */}
-         {hoveredUpgrade === index && (
-                  <div className="tooltip">
-                    CPS: {formatNumber(upgrade.cps * upgrade.number)}
-                    </div>
-                )}
-      </div>
-      <div className="upgrade-cost">
-        {formatNumber(upgrade.cost)} <img src={cookieImage} alt="Cookie" className="cookie-icon" />
-      </div>
-    </button>
-  ))}
-</div>
-      </div>
-
       <Footer />
     </div>
   );

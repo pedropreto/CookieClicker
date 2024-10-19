@@ -1,0 +1,67 @@
+/* Style for the Upgrade Buttons - Smaller and different from building buttons */
+.upgrade-item {
+    display: inline-flex;
+    justify-content: center; /* Center the text and icon */
+    align-items: center;
+    padding: 4px 4px; /* Reduced padding for a smaller button */
+    margin: 0 10px; /* Space between the upgrade buttons */
+    border: 2px solid #888; /* Border color */
+    background: linear-gradient(135deg, #4b6cb7, #182848); /* Different gradient for upgrades */
+    color: white;
+    font-size: 0.2rem;  /* Smaller text */
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.1s;
+    cursor: pointer;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2); /* Inner shadow effect */
+    height: 50px;
+}
+
+.upgrade-name {
+    font-size: 0.7rem !important;
+    font-weight: bold;
+    color: #ffffff; /* White color for upgrade name */
+    flex-grow: 1; /* Allow the name to grow and take available space */
+    margin:0;
+  }
+
+    /* Style for the cost section (right side of the button) */
+.upgrade-cost {
+    font-size: 0.5rem; /* Font size for the cost */
+    display: flex;
+    align-items: center; /* Vertically align the cost and cookie icon */
+    justify-content: flex-end; /* Align cost to the right */
+    width: 50px; /* Fixed width for the cost section */
+  }
+
+  .upgrade-cost img {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px; /* Space between the number and the cookie image */
+  }
+
+.upgrade-item:hover {
+    background: linear-gradient(135deg, #333c6b, #0d1f32); /* Darker on hover */
+}
+
+.upgrade-item:active {
+    background-color: #333c6b; /* Dark background when clicked */
+}
+
+/* Make sure the upgrade items are displayed horizontally */
+.upgrades-section {
+    display: flex;
+    overflow-x: auto; /* Allow horizontal scrolling if needed */
+    padding: 10px 0;
+    justify-content: flex-start; /* Align items to the left */
+    gap: 10px; /* Space between buttons */
+}
+
+/* Disable button style if not affordable */
+.upgrade-item.too-expensive {
+    opacity: 0.5; /* Dim the button */
+    cursor: not-allowed; /* Make the cursor indicate it's disabled */
+}
+
+.upgrade-item.too-expensive:hover {
+    background: linear-gradient(135deg, #4b6cb7, #182848); /* No hover effect */
+}

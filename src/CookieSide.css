@@ -1,0 +1,31 @@
+/* Style for the text */
+.cookie-count {
+    font-size: 3rem; /* You can adjust the size as needed */
+    font-weight: bold;
+    color: #ffdf00; /* A nice golden color for the cookie count */
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    display: inline-block;
+    z-index: 2; /* Ensure it's in front of the strip */
+  }
+
+    /* Style for the Total CPS text */
+.total-cps {
+    font-size: 1rem; /* Smaller font size for CPS */
+    color: #d3d3d3; /* Lighter color for CPS */
+    font-weight: normal; /* Regular weight */
+    vertical-align: top; /* Align the CPS text to the top */
+    margin: 5px 0; /* Space between cookie count and CPS */
+  }
+
+  /* Semi-transparent strip below the cookie count */
+.cookie-strip {
+    width: 100%; /* Full width of the container */
+    height: 5px; /* Height of the strip */
+    background-color: rgba(255, 255, 255, 0.2); /* White with 20% opacity */
+    position: absolute; /* Position it absolutely within the parent */
+    bottom: 0; /* Align it to the bottom */
+    left: 0; /* Stretch across the full width */
+    z-index: 1; /* Ensure it is behind other content */
+  }

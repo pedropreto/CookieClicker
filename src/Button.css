@@ -30,27 +30,6 @@
   }
 
 
-  /* Autoclicker button styling */
-.autoclicker-button {
-    background-color: #ff9800;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 20px;
-    transition: transform 0.2s ease; /* Smooth transition for transform */
-  }
-  
-  .autoclicker-button:hover {
-    background-color: #e68900;
-  }
-  
-  .autoclicker-button:active {
-    transform: scale(0.95); /* Slightly shrink the button when clicked */
-  }
-
   .purchase-button {
     background: none; /* Transparent background */
     border: none; /* Remove default button border */
