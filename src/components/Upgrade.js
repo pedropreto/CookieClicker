@@ -2,8 +2,6 @@
 import React from 'react';
 import cookieImage from '../images/cookie.png'; // Update path if needed
 import '../Upgrades.css';
-import { formatNumber } from '../utils/helpers'; // Import from utils
-
 
 const Upgrade = ({ upgrade, index, cookies, purchaseBuildingUpgrade, formatNumber }) => {
   const upgradeCost = upgrade.baseCost * Math.pow(2, upgrade.purchasedAt.length);
