@@ -213,23 +213,34 @@ function App() {
         </div>
         <div className="right-section">
         <p>Upgrades</p>
-        <div className='upgrades-section'>
-        {buildingUpgrades.map((upgrade, index) => (
-          upgrade.unlockedAt !== null && (
-          <Upgrade
-            index={index}
-            upgrade={upgrade}
-            cookies={cookies}
-            purchaseBuildingUpgrade={purchaseBuildingUpgrade}
-            setCookies={setCookies}
-            buildings={buildings}
-            setBuildings={setBuildings}
-            setTotalCPS={setTotalCPS}
-            formatNumber={formatNumber}
-            icon={upgrade.icon}
-          />
-          )
-        ))}
+        <div className="upgrades-section">
+          {buildingUpgrades.map((upgrade, index) => {
+            // Find the building corresponding to the upgrade
+            const building = buildings.find((b) => b.name === upgrade.building);
+
+            // Check if the upgrade can be purchased based on building count
+            const canPurchase = building && building.number >= upgrade.buildingCount;
+
+            // Upgrade should only be shown if it meets building count and has not been purchased yet
+            if (canPurchase && !upgrade.purchasedAt.length) {
+              return (
+                <Upgrade
+                  key={upgrade.name}
+                  index={index}
+                  upgrade={upgrade}
+                  cookies={cookies}
+                  purchaseBuildingUpgrade={purchaseBuildingUpgrade}
+                  setCookies={setCookies}
+                  buildings={buildings}
+                  setBuildings={setBuildings}
+                  setTotalCPS={setTotalCPS}
+                  formatNumber={formatNumber}
+                  icon={upgrade.icon}
+                />
+              );
+            }
+            return null; // Don't show the upgrade if it cannot be purchased
+          })}
         </div>
         
         <p>Buildings</p>
