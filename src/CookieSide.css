@@ -21,13 +21,50 @@
     position: relative;
   }
 
-  /* Semi-transparent strip below the cookie count */
-.cookie-strip {
-    width: 100%; /* Full width of the container */
-    height: 5px; /* Height of the strip */
-    background-color: rgba(255, 255, 255, 0.2); /* White with 20% opacity */
-    position: absolute; /* Position it absolutely within the parent */
-    bottom: 0; /* Align it to the bottom */
-    left: 0; /* Stretch across the full width */
-    z-index: 1; /* Ensure it is behind other content */
+  /* Ensure cookie button has correct size and no hover effect changes color */
+.cookie-button img {
+  width: 300px; /* Control cookie image size */
+  height: auto;
+  transition: transform 0.2s ease;
+}
+
+.cookie-button:hover img {
+  transform: scale(1.2); /* Slightly enlarge on hover */
+}
+
+.cookie-button:active img {
+  transform: scale(1.1); /* Shrink on click */
+}
+
+/* Style for cookie button */
+.cookie-button {
+  background: none;  /* Remove the background */
+  border: none;      /* Remove the border */
+  cursor: pointer;   /* Ensure it behaves like a button */
+  padding: 0;         /* Remove extra padding */
+  position: relative;
   }
+    
+
+/* Prevent any background color or other hover styles for the cookie button */
+.cookie-button:hover {
+  background: none;   /* Ensure no background color change */
+  border: none;       /* Ensure no border on hover */
+  color: inherit;     /* Prevent color change */
+}
+
+/* Parent container */
+.cookie-container {
+  display: flex;
+  flex-direction: column;    /* Stack items vertically */
+  justify-content: center;   /* Centers the elements vertically within the container */
+  align-items: center;       /* Centers the elements horizontally within the container */
+  height: 100vh;             /* Full viewport height */
+  width: 100%;               /* Full width */
+}
+
+/* Text container (cookie count and CPS) */
+.text-container {
+  text-align: center;  /* Ensures the text is centered */
+  margin-bottom: 20px; /* Space between text and button */
+}

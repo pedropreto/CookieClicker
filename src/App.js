@@ -17,13 +17,20 @@ import { click } from '@testing-library/user-event/dist/click';
 
 
 function App() {
+  const initialClickValue = 100
+
   const [cookies, setCookies] = useState(0);
-  const [clickValue, setClickValue] = useState(1); // Value of each manual click
+  const [clickValue, setClickValue] = useState(initialClickValue); // Value of each manual click
   const [totalCPS, setTotalCPS] = useState(0); // Total CPS (sum of all upgrades)
   const [cookieOverflow, setCookieOverflow] = useState(0); // Accumulates fractional cookies
   const [hoveredUpgrade, setHoveredUpgrade] = useState(null); // Track hovered upgrade index
   const [buildings, setBuildings] = useState(initialBuildings);  // Building data from file
   const [buildingUpgrades, setBuildingUpgrades] = useState(initialBuildingUpgrades);  // Upgrade data from file
+  const [manualCursor, setManualCursor] = useState({
+    baseValue: 1, // Initial base value for manual clicks
+    multiplier: 1, // Initial multiplier (will increase with upgrades)
+    percentageOfCPS: 0, // Percentage of total CPS applied to click value
+});
 
 
 
@@ -33,6 +40,38 @@ function App() {
     setCookies(prev => prev + clickValue);
   };
 
+  const updateManualCursor = (upgrades, totalCPS) => {
+    let cursorMultiplier = manualCursor.multiplier;
+    let percentageOfCPS = manualCursor.percentageOfCPS;
+
+    // Loop through cursor-related upgrades
+    upgrades.forEach(upgrade => {
+        if (upgrade.building === "Cursor" && upgrade.purchasedAt.length > 0) {
+            cursorMultiplier *= upgrade.multiplier; // Apply the multiplier from each upgrade
+            percentageOfCPS += upgrade.cpsPercentage || 0; // Increase percentage if upgrade adds CPS
+        }
+    });
+
+    // Update the manualCursor object
+    setManualCursor({
+        baseValue: initialClickValue, // Base value for clicks, could increase with some upgrades
+        multiplier: cursorMultiplier,
+        percentageOfCPS: percentageOfCPS,
+    });
+};
+
+useEffect(() => {
+  updateManualCursor(buildingUpgrades, totalCPS); // Update when building upgrades or totalCPS changes
+}, [buildingUpgrades, totalCPS]); // Trigger whenever these dependencies change
+
+
+// Recalculate the click value when manualCursor or totalCPS changes
+useEffect(() => {
+  const newClickValue = (manualCursor.baseValue * manualCursor.multiplier) + (manualCursor.percentageOfCPS * totalCPS);
+  
+  // Update the click value state
+  setClickValue(newClickValue);
+}, [manualCursor, totalCPS]);
 
   const purchaseBuilding = (index) => {
     const newBuildings = [...buildings];
@@ -88,24 +127,18 @@ function App() {
                 return building;
             });
             setBuildings(updatedBuildings);
-        } else if (upgrade.type === 2) {
-            // Type 2: Apply multipliers to multiple buildings
-            const updatedBuildings = buildings.map((building) => {
-                // Find the effect for this building (for Type 2 upgrades)
-                const effectForBuilding = upgrade.effects?.find(e => e.building === building.name); // Safe access to effects
-
-                if (effectForBuilding) {
-                    return {
-                        ...building,
-                        cps: building.cps * effectForBuilding.multiplier, // Apply the multiplier
-                    };
-                }
-                return building;
-            });
-            setBuildings(updatedBuildings);
         }
+
+        if (upgrade.type === 2) {
+          // Type 2: Do nothing
+         
+      }
     }
+    
 };
+
+
+
   // Auto-clicking cookies per second
   useEffect(() => {
     let interval;
@@ -139,7 +172,7 @@ function App() {
       
   
       // Update to use buildingCount directly
-    if (building.number >= upgrade.buildingCount && upgrade.unlockedAt === null) {
+    if (building  && building.number >= upgrade.buildingCount && upgrade.unlockedAt === null) {
       return { ...upgrade, unlockedAt: true }; // Unlock upgrade
     }
     return upgrade; // Otherwise, return the upgrade as is
@@ -159,31 +192,22 @@ function App() {
   }, [buildings]); // Runs whenever buildings change
 
 
-  // Calculate the new click value based on the number of upgrades
-useEffect(() => {
-    let newClickValue = 1;
-    
-    // Loop through the purchased cursor upgrades
-    buildingUpgrades.forEach(upgrade => {
-        if (upgrade.building === "Cursor" && upgrade.purchasedAt.length > 0) {
-            newClickValue *= upgrade.multiplier; // Increase click value based on upgrades
-        }
-    });
-
-    setClickValue(newClickValue); // Update click value
-}, [buildingUpgrades]); // This runs whenever building upgrades change
-
+ 
 
   return (
     <div className="app-container">
       <Header />
       <div className="content-wrapper">
         <div className="left-section">
+          <div className='cookie-container'>
+            <div className='text-container'>
           <p className="cookie-count">{formatNumber(Math.floor(cookies))} Cookies</p>
           <p className="total-cps">per second: {formatNumber(totalCPS)} click value : {clickValue}</p>
+          </div>
           <button onClick={handleClick} className="cookie-button">
             <img src={cookieImage} alt="Cookie" />
           </button>
+          </div>
           
         </div>
 
